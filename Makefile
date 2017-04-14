@@ -2,8 +2,11 @@ overlays := $(patsubst %.dts,%.dtbo,$(wildcard *.dts))
 
 all: $(overlays)
 
+Q=@
+
 %.dtbo: %.dts
-	dtc -I dts -@ -O dtb -o $@ $<
+	@echo "DTC $@"
+	$(Q)dtc -I dts -@ -O dtb -o $@ $<
 
 clean:
 	-rm -rf *.dtbo
