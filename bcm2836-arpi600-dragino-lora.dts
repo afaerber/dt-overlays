@@ -1,0 +1,72 @@
+/*
+ * Copyright (c) 2017 Andreas Färber
+ *
+ * SPDX-License-Identifier: GPL-2.0+ OR MIT
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "brcm,bcm2836";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	fragment@0 {
+		reg = <0>;
+
+		target-path = "/soc/gpio@7e200000/gpioout";
+
+		__overlay__ {
+			/* Add GPIO 4 */
+			brcm,pins = <4 6>;
+		};
+	};
+
+	fragment@1 {
+		reg = <1>;
+
+		target-path = "/soc/gpio@7e200000/alt0";
+
+		__overlay__ {
+			/* Drop GPIO 4 */
+			brcm,pins = <0 1 2 3 5 7 8 9 10 11 14 15 40 45>;
+		};
+	};
+
+	fragment@2 {
+		reg = <2>;
+
+		target-path = "/soc/spi@7e204000";
+
+		__overlay__ {
+			status = "okay";
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			lora@0 {
+				compatible = "semtech,sx1276";
+				reg = <0>;
+				spi-max-frequency = <500000>;
+				/*
+				 * RESET == D9 == P7 == 4
+				 * DIO0  == D2 == P0 == 17
+				 * DIO1  == D6 == P4 == 23
+				 * DIO2  == D7 == P5 == 24
+				 * DIO3
+				 * DIO4
+				 * DIO5  == D8 == P6 == 25
+				 */
+				reset-gpio = <&gpio 4 1>;
+				dio-gpios = <&gpio 17 1>,
+				            <&gpio 23 1>,
+				            <&gpio 24 1>,
+				            <0>,
+				            <0>,
+				            <&gpio 27 1>;
+			};
+		};
+	};
+};
