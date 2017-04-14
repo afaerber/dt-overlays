@@ -1,0 +1,33 @@
+/*
+ * Copyright (c) 2017 Andreas Färber
+ *
+ * SPDX-License-Identifier: GPL-2.0+ OR MIT
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	fragment@0 {
+		reg = <0>;
+
+		target = <&uart2>;
+
+		__overlay__ {
+			status = "okay";
+
+			/* GPIO6 == PH6 */
+			cts-gpios = <&pio 7 6 0>;
+
+			lora {
+				compatible = "microchip,rn2483";
+				/* max-speed = <>; */
+				/* GPIO5 == PH5 */
+				reset-gpios = <&pio 7 5 1>;
+			};
+		};
+	};
+};
