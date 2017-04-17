@@ -1,0 +1,50 @@
+/*
+ * Copyright (c) 2017 Andreas Färber
+ *
+ * SPDX-License-Identifier: GPL-2.0+ OR MIT
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "brcm,bcm2837";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	fragment@0 {
+		reg = <0>;
+
+		target = <&spi>;
+
+		__overlay__ {
+			status = "okay";
+			pinctrl-names = "default";
+			pinctrl-0 = <&spi0_gpio7>;
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			lora@0 {
+				compatible = "semtech,sx1276";
+				reg = <0>;
+				spi-max-frequency = <500000>;
+				reset-gpio = <&gpio 17 1>;
+				dio-gpios = <&gpio 4 1>,
+				            <&gpio 23 1>,
+				            <&gpio 24 1>,
+				            <0>,
+				            <0>,
+				            <0>;
+			};
+
+			rf@1 {
+				compatible = "hoperf,rfm22b";
+				reg = <1>;
+				spi-max-frequency = <500000>;
+				nirq-gpio = <&gpio 22 1>;
+			};
+		};
+	};
+};
