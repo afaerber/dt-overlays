@@ -19,8 +19,8 @@
 		target-path = "/soc/gpio@7e200000/gpioout";
 
 		__overlay__ {
-			/* Add GPIO 4 */
-			brcm,pins = <4 6>;
+			/* Add GPIO 7 */
+			brcm,pins = <6 7>;
 		};
 	};
 
@@ -30,8 +30,8 @@
 		target-path = "/soc/gpio@7e200000/alt0";
 
 		__overlay__ {
-			/* Drop GPIO 4 */
-			brcm,pins = <0 1 2 3 5 7 8 9 10 11 14 15 40 45>;
+			/* Drop GPIO 7 */
+			brcm,pins = <0 1 2 3 4 5 8 9 10 11 14 15 40 45>;
 		};
 	};
 
@@ -53,7 +53,7 @@
 				clock-frequency = <32000000>;
 				radio-frequency = <868000000>;
 				/*
-				 * RESET
+				 * RESET == A0 ==  7
 				 * DIO0  == P0 == 17
 				 * DIO1  == P1 == 18
 				 * DIO2  == P2 == 21/27
@@ -61,7 +61,7 @@
 				 * DIO4
 				 * DIO5
 				 */
-				/*reset-gpio = <&gpio 4 1>;*/
+				reset-gpio = <&gpio 7 1>;
 				dio-gpios = <&gpio 17 1>,
 				            <&gpio 18 1>,
 				            <&gpio 21 1>,
