@@ -43,6 +43,7 @@
 			netx@0 {
 				compatible = "spidev";
 				reg = <0>;
+				spi-max-frequency = <500000>;
 			};
 		};
 	};
