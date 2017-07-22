@@ -26,7 +26,7 @@
 				compatible = "microchip,rn2483";
 				/* max-speed = <>; */
 				/* GPIO5 == PH5 */
-				reset-gpios = <&pio 7 5 1>;
+				reset-gpios = <&pio 7 5 0>;
 			};
 		};
 	};
