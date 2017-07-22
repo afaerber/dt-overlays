@@ -14,35 +14,10 @@
 	fragment@0 {
 		reg = <0>;
 
-		target = <&pio>;
-
-		__overlay__ {
-			uart2_pins: uart2-pins {
-				pins = "PB0", "PB1";
-				function = "uart2";
-			};
-		};
-	};
-
-	fragment@1 {
-		reg = <1>;
-
-		target-path = "/aliases";
-
-		__overlay__ {
-			serial2 = "/soc/serial@1c28800";
-		};
-	};
-
-	fragment@2 {
-		reg = <2>;
-
 		target = <&uart2>;
 
 		__overlay__ {
 			status = "okay";
-			pinctrl-names = "default";
-			pinctrl-0 = <&uart2_pins>;
 		};
 	};
 };
