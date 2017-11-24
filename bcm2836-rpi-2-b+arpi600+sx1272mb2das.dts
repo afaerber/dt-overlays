@@ -16,32 +16,41 @@
 	fragment@0 {
 		reg = <0>;
 
-		target-path = "/soc/gpio@7e200000/gpioout";
+		target = <&gpio>;
 
 		__overlay__ {
-			/* Add GPIO 7 */
-			brcm,pins = <6 7>;
+			gpioout_sx1272: gpioout_sx1272 {
+				brcm,pins = <7>;
+				brcm,function = <1>; /* gpio out */
+			};
+
+			spi0_gpio7_no_ce1: spi0_gpio7-no-ce1 {
+				brcm,pins = <8 9 10 11>;
+				brcm,function = <4>; /* alt0 */
+			};
 		};
 	};
 
 	fragment@1 {
 		reg = <1>;
 
-		target-path = "/soc/gpio@7e200000/alt0";
+		target = <&alt0>;
 
 		__overlay__ {
-			/* Drop GPIO 7 */
-			brcm,pins = <0 1 2 3 4 5 8 9 10 11 14 15 40 45>;
+			/* Drop GPIO 7, SPI 8-11 */
+			brcm,pins = <4 5>;
 		};
 	};
 
 	fragment@2 {
 		reg = <2>;
 
-		target-path = "/soc/spi@7e204000";
+		target = <&spi>;
 
 		__overlay__ {
 			status = "okay";
+			pinctrl-names = "default";
+			pinctrl-0 = <&spi0_gpio7_no_ce1>;
 
 			#address-cells = <1>;
 			#size-cells = <0>;
@@ -49,6 +58,8 @@
 			lora@0 {
 				compatible = "semtech,sx1272";
 				reg = <0>;
+				pinctrl-names = "default";
+				pinctrl-0 = <&gpioout_sx1272>;
 				spi-max-frequency = <500000>;
 				clock-frequency = <32000000>;
 				radio-frequency = <868000000>;
