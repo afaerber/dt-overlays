@@ -16,7 +16,7 @@
 	fragment@0 {
 		reg = <0>;
 
-		target-path = "/soc/i2c@7e804000";
+		target = <&i2c1>;
 
 		__overlay__ {
 			status = "okay";
