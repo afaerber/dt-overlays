@@ -1,0 +1,35 @@
+/*
+ * Copyright (c) 2017 Andreas Färber
+ *
+ * SPDX-License-Identifier: GPL-2.0+ or MIT
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "friendlyarm,nanopi-k2";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	fragment@0 {
+		reg = <0>;
+
+		target = <&uart_C>;
+
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@1 {
+		reg = <1>;
+
+		target-path = "/aliases";
+
+		__overlay__ {
+			serial1 = "/soc/cbus@c1100000/serial@8700";
+		};
+	};
+};
