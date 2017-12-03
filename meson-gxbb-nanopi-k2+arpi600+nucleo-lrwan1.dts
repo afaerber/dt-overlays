@@ -20,6 +20,8 @@
 
 		__overlay__ {
 			status = "okay";
+			compatible = "amlogic,meson-gx-uart";
+			clock-names = "xtal", "pclk", "baud";
 		};
 	};
 
