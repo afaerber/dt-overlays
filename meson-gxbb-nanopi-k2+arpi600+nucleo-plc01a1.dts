@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Andreas Färber
+ * Copyright (c) 2018 Andreas Färber
  *
  * SPDX-License-Identifier: GPL-2.0+ or MIT
  */
@@ -21,14 +21,18 @@
 		__overlay__ {
 			gpio_spi: spi {
 				compatible = "spi-gpio";
-				gpio-mosi = <&gpio 80 0>; /* GPIOY_5 */
-				gpio-miso = <&gpio 82 0>; /* GPIOY_7 */
-				gpio-sck  = <&gpio 84 0>; /* GPIOY_9 */
-				cs-gpios  = <&gpio 83 0>, /* GPIOY_8 */
-				            <&gpio 85 0>; /* GPIOY_10 */
+				mosi-gpios = <&gpio 80 0>; /* GPIOY_5 */
+				gpio-mosi  = <&gpio 80 0>; /* GPIOY_5 */
+				miso-gpios = <&gpio 82 0>; /* GPIOY_7 */
+				gpio-miso  = <&gpio 82 0>; /* GPIOY_7 */
+				sck-gpios  = <&gpio 84 0>; /* GPIOY_9 */
+				gpio-sck   = <&gpio 84 0>; /* GPIOY_9 */
+				cs-gpios   = <&gpio 83 0>, /* GPIOY_8 */
+				             <&gpio 75 0>; /* GPIOY_0 */
 				num-chipselects = <2>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+				/*ranges;*/
 			};
 		};
 	};
@@ -51,17 +55,17 @@
 			#address-cells = <1>;
 			#size-cells = <0>;
 
-			input@0 {
-				compatible = "st,clt01-38sq7";
+			output@0 {
+				compatible = "st,vni8200xp";
 				reg = <0>;
-				spi-max-frequency = <6250000>;
+				spi-max-frequency = <5000000>;
+				output-enable-gpios = <&gpio 90 0>; /*GPIOY_15*/
 			};
 
-			output@1 {
-				compatible = "st,vni8200xp";
+			input@1 {
+				compatible = "st,clt01-38sq7";
 				reg = <1>;
-				spi-max-frequency = <5000000>;
-				output-enable-gpios = <&gpio 90 0>; /*GPIO_Y15*/
+				spi-max-frequency = <6250000>;
 			};
 		};
 	};
