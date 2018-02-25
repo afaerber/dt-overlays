@@ -21,11 +21,11 @@
 		__overlay__ {
 			gpio_spi: spi {
 				compatible = "spi-gpio";
-				gpio-mosi = <&gpio 80 0>;
-				gpio-miso = <&gpio 82 0>;
-				gpio-sck  = <&gpio 84 0>;
-				cs-gpios  = <&gpio 83 0>,
-				            <&gpio 85 0>;
+				gpio-mosi = <&gpio 80 0>; /* GPIOY_5 */
+				gpio-miso = <&gpio 82 0>; /* GPIOY_7 */
+				gpio-sck  = <&gpio 84 0>; /* GPIOY_9 */
+				cs-gpios  = <&gpio 83 0>, /* GPIOY_8 */
+				            <&gpio 85 0>; /* GPIOY_10 */
 				num-chipselects = <2>;
 				#address-cells = <1>;
 				#size-cells = <0>;
@@ -54,13 +54,14 @@
 			input@0 {
 				compatible = "st,clt01-38sq7";
 				reg = <0>;
-				spi-max-frequency = <50000000>;
+				spi-max-frequency = <6250000>;
 			};
 
 			output@1 {
 				compatible = "st,vni8200xp";
 				reg = <1>;
-				spi-max-frequency = <50000000>;
+				spi-max-frequency = <5000000>;
+				output-enable-gpios = <&gpio 90 0>; /*GPIO_Y15*/
 			};
 		};
 	};
