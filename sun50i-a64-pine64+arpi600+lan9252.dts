@@ -1,0 +1,32 @@
+/*
+ * Copyright (c) 2017-2018 Andreas Färber
+ *
+ * SPDX-License-Identifier: GPL-2.0+ OR MIT
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	fragment@0 {
+		reg = <0>;
+
+		target = <&spi0>;
+
+		__overlay__ {
+			status = "okay";
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			ethercat@0 {
+				compatible = "microchip,lan9252";
+				reg = <0>;
+				spi-max-frequency = <30000000>;
+			};
+		};
+	};
+};
