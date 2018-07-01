@@ -1,0 +1,26 @@
+/* SPDX-License-Identifier: GPL-2.0+ OR MIT */
+/*
+ * Copyright (c) 2018 Andreas Färber
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	fragment@0 {
+		reg = <0>;
+
+		target = <&uart2>;
+
+		__overlay__ {
+			status = "okay";
+
+			lora {
+				compatible = "rakwireless,rak811";
+			};
+		};
+	};
+};
