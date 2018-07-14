@@ -1,0 +1,28 @@
+/* SPDX-License-Identifier: GPL-2.0-or-later OR MIT */
+/*
+ * Copyright (c) 2018 Andreas Färber
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	fragment@0 {
+		reg = <0>;
+
+		target = <&uart3>;
+
+		__overlay__ {
+			status = "okay";
+
+			lora {
+				compatible = "himalaya,himo-01m";
+				/* PB2 */
+				reset-gpios = <&pio 1 2 0>;
+			};
+		};
+	};
+};
