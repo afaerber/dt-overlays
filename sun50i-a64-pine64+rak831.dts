@@ -28,25 +28,18 @@
 				/* GPIO 17 == PC7 */
 				reset-gpios = <&pio 2 7 0>;
 
-				radio-a {
+				radio-spi {
 					#address-cells = <1>;
 					#size-cells = <0>;
 
 					lora@0 {
 						compatible = "semtech,sx1257";
 						reg = <0>;
-						spi-max-frequency = <10000000>;
 					};
-				};
 
-				radio-b {
-					#address-cells = <1>;
-					#size-cells = <0>;
-
-					lora@0 {
+					lora@1 {
 						compatible = "semtech,sx1257";
-						reg = <0>;
-						spi-max-frequency = <10000000>;
+						reg = <1>;
 					};
 				};
 			};
