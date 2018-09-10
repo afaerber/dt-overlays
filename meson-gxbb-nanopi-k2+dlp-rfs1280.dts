@@ -1,0 +1,66 @@
+/* SPDX-License-Identifier: GPL-2.0-or-later or MIT */
+/*
+ * Copyright (c) 2018 Andreas Färber
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "friendlyarm,nanopi-k2";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	fragment@0 {
+		reg = <0>;
+
+		target-path = "/";
+
+		__overlay__ {
+			gpio_spi: spi {
+				compatible = "spi-gpio";
+				mosi-gpios = <&gpio 80 0>; /* GPIOY_5 */
+				gpio-mosi  = <&gpio 80 0>; /* GPIOY_5 */
+				miso-gpios = <&gpio 82 0>; /* GPIOY_7 */
+				gpio-miso  = <&gpio 82 0>; /* GPIOY_7 */
+				sck-gpios  = <&gpio 84 0>; /* GPIOY_9 */
+				gpio-sck   = <&gpio 84 0>; /* GPIOY_9 */
+				cs-gpios   = <&gpio 83 0>, /* GPIOY_8 */
+				             <&gpio 75 0>; /* GPIOY_0 */
+				num-chipselects = <2>;
+				#address-cells = <1>;
+				#size-cells = <0>;
+				/*ranges;*/
+			};
+		};
+	};
+
+	fragment@1 {
+		reg = <1>;
+
+		target-path = "/aliases";
+
+		__overlay__ {
+		};
+	};
+
+	fragment@2 {
+		reg = <2>;
+
+		target = <&gpio_spi>;
+
+		__overlay__ {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			lora@0 {
+				compatible = "semtech,sx1280";
+				reg = <0>;
+				spi-max-frequency = <8000000>;
+				reset-gpios = <&gpio 78 0>; /* GPIOY_3 */
+				busy-gpios = <&gpio 81 0>; /* GPIOY_6 */
+			};
+		};
+	};
+};
