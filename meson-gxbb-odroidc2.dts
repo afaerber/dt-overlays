@@ -1,0 +1,35 @@
+/*
+ * Copyright (c) 2018 Andreas Färber
+ *
+ * SPDX-License-Identifier: GPL-2.0+ or MIT
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "hardkernel,odroid-c2";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	fragment@0 {
+		reg = <0>;
+
+		target = <&ethmac>;
+
+		__overlay__ {
+			interrupts = <0x0 0x8 0x4>;
+		};
+	};
+
+	/*fragment@1 {
+		reg = <1>;
+
+		target = <&eth_phy0>;
+
+		__overlay__ {
+			/delete-property/ eee-broken-1000t;
+		};
+	};*/
+};
