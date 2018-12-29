@@ -13,6 +13,21 @@
 	fragment@0 {
 		reg = <0>;
 
+		target-path = "/";
+
+		__overlay__ {
+			rak831_clk32m: rak831-clk32m {
+				compatible = "fixed-clock";
+				clock-frequency = <32000000>;
+				clock-output-names = "rak831-clk32m";
+				#clock-cells = <0>;
+			};
+		};
+	};
+
+	fragment@1 {
+		reg = <1>;
+
 		target = <&spi0>;
 
 		__overlay__ {
@@ -27,6 +42,8 @@
 				spi-max-frequency = <10000000>;
 				/* GPIO 17 == PC7 */
 				reset-gpios = <&pio 2 7 0>;
+				clocks = <&rak831_radio1>;
+				clock-names = "clk32m";
 
 				radio-spi {
 					#address-cells = <1>;
@@ -35,11 +52,17 @@
 					lora@0 {
 						compatible = "semtech,sx1257";
 						reg = <0>;
+						clocks = <&rak831_clk32m>;
+						clock-names = "tcxo";
 					};
 
-					lora@1 {
+					rak831_radio1: lora@1 {
 						compatible = "semtech,sx1257";
 						reg = <1>;
+						clocks = <&rak831_clk32m>;
+						clock-names = "tcxo";
+						clock-output-names = "rak831_clk32m";
+						#clock-cells = <0>;
 					};
 				};
 			};
