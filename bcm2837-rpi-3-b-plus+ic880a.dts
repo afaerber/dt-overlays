@@ -1,0 +1,81 @@
+/* SPDX-License-Identifier: GPL-2.0-or-later OR MIT */
+/*
+ * Copyright (c) 2018-2019 Andreas Färber
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	fragment@0 {
+		reg = <0>;
+
+		target-path = "/";
+
+		__overlay__ {
+			ic880a_clk32m: ic880a-clk32m {
+				compatible = "fixed-clock";
+				clock-frequency = <32000000>;
+				clock-output-names = "ic880a-clk32m";
+				#clock-cells = <0>;
+			};
+		};
+	};
+
+	fragment@1 {
+		reg = <1>;
+
+		target = <&spi>;
+
+		__overlay__ {
+			status = "okay";
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			spidev@0 {
+				reg = <0>;
+				status = "disabled";
+			};
+
+			spidev@1 {
+				reg = <1>;
+				status = "disabled";
+			};
+
+			lora@0 {
+				compatible = "semtech,sx1301";
+				reg = <0>;
+				spi-max-frequency = <10000000>;
+				/* TODO GPIO 17 == PC7 */
+				/*reset-gpios = <&pio 2 7 0>; */
+				clocks = <&ic880a_radio1>;
+				clock-names = "clk32m";
+
+				radio-spi {
+					#address-cells = <1>;
+					#size-cells = <0>;
+
+					lora@0 {
+						compatible = "semtech,sx1257";
+						reg = <0>;
+						clocks = <&ic880a_clk32m>;
+						clock-names = "tcxo";
+					};
+
+					ic880a_radio1: lora@1 {
+						compatible = "semtech,sx1257";
+						reg = <1>;
+						clocks = <&ic880a_clk32m>;
+						clock-names = "tcxo";
+						clock-output-names = "ic880a_clk32m";
+						#clock-cells = <0>;
+					};
+				};
+			};
+		};
+	};
+};
