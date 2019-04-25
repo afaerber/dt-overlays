@@ -41,10 +41,11 @@
 				            <0>;
 			};
 
-			rf@1 {
-				compatible = "hoperf,rfm22b";
+			fsk@1 {
+				compatible = "silabs,si4432";
 				reg = <1>;
 				spi-max-frequency = <500000>;
+				radio-frequency = <433000000>;
 				nirq-gpio = <&gpio 22 1>;
 			};
 		};
