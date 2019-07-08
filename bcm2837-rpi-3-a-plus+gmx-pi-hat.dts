@@ -1,0 +1,50 @@
+/* SPDX-License-Identifier: GPL-2.0-or-later OR MIT */
+/*
+ * Copyright (c) 2018-2019 Andreas Färber
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	fragment@0 {
+		reg = <0>;
+
+		target-path = "/";
+
+		__overlay__ {
+			sc16is752_clk: sc16is752-clk {
+				compatible = "fixed-clock";
+				clock-frequency = <1843200>;
+				#clock-cells = <0>;
+			};
+		};
+	};
+
+	fragment@1 {
+		reg = <1>;
+
+		target = <&i2c1>;
+
+		__overlay__ {
+			status = "okay";
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			sc16is752: serial@4d {
+				compatible = "nxp,sc16is752";
+				reg = <0x4d>;
+				i2c-max-frequency = <400000>;
+				clocks = <&sc16is752_clk>;
+				interrupt-parent = <&gpio>;
+				interrupts = <17 0x2>;
+				gpio-controller;
+				#gpio-cells = <0>;
+			};
+		};
+	};
+};
