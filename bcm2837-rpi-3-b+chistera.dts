@@ -19,9 +19,9 @@
 		target = <&spi>;
 
 		__overlay__ {
-			status = "okay";
+			/*status = "okay";
 			pinctrl-names = "default";
-			pinctrl-0 = <&spi0_gpio7>;
+			pinctrl-0 = <&spi0_gpio7>;*/
 
 			#address-cells = <1>;
 			#size-cells = <0>;
